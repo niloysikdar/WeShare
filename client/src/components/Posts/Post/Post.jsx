@@ -13,14 +13,13 @@ import moment from "moment";
 
 import useStyles from "./styles";
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
       <CardMedia
         className={classes.media}
-        title={post.title}
-        image={post.image}
+        image={post.image ? post.image : "https://i.imgur.com/lqtlMEL.png"}
       />
       <div className={classes.overlay}>
         <Typography variant="h6">{post.author}</Typography>
@@ -29,7 +28,12 @@ const Post = ({ post }) => {
         </Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: "white" }}>
+        <Button
+          style={{ color: "white" }}
+          onClick={() => {
+            setCurrentId(post._id);
+          }}
+        >
           <MoreHoriz />
         </Button>
       </div>
@@ -38,8 +42,11 @@ const Post = ({ post }) => {
           {`Tags: ${post.tags}`}
         </Typography>
       </div>
+      <Typography className={classes.title} variant="h5" color="textPrimary">
+        {post.title}
+      </Typography>
       <CardContent>
-        <Typography className={classes.title} variant="h5" color="textPrimary">
+        <Typography variant="h6" color="textPrimary">
           {post.message}
         </Typography>
       </CardContent>

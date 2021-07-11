@@ -4,14 +4,14 @@ import { Grid, CircularProgress } from "@material-ui/core";
 import Post from "./Post/Post";
 import useStyles from "./styles";
 
-const Posts = () => {
+const Posts = ({ setCurrentId }) => {
   const classes = useStyles();
   const posts = useSelector((state) => state.posts);
 
   console.log(posts, posts.length);
 
   return posts.length === 0 ? (
-    <CircularProgress />
+    <CircularProgress size={70} style={{ color: "white" }} />
   ) : (
     <Grid
       className={classes.mainContainer}
@@ -23,7 +23,7 @@ const Posts = () => {
         console.log(post);
         return (
           <Grid key={post._id} item xs={12} sm={6}>
-            <Post post={post} />
+            <Post post={post} setCurrentId={setCurrentId} />
           </Grid>
         );
       })}
