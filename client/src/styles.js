@@ -6,6 +6,7 @@ export default makeStyles(() => ({
     margin: "30px 0",
   },
   heading: {
-    color: "rgba(0,183,255, 1)",
+    color: "#00bb77",
+    margin: "10px 0",
   },
 }));
