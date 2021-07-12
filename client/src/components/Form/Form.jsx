@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 
-import { createPost, updatePost } from "../../actions/posts";
+import { getPosts, createPost, updatePost } from "../../actions/posts";
 
 import useStyles from "./styles";
 
@@ -33,10 +33,12 @@ const Form = ({ currentId, setCurrentId }) => {
     if (currentId) {
       dispatch(updatePost(currentId, postData)).then(() => {
         clearForm();
+        dispatch(getPosts());
       });
     } else {
       dispatch(createPost(postData)).then(() => {
         clearForm();
+        dispatch(getPosts());
       });
     }
     console.log("Form has been submitted");
