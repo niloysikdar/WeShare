@@ -58,7 +58,13 @@ const Post = ({ post, setCurrentId }) => {
           color="primary"
           onClick={() => {
             console.log("Like pressed");
-            dispatch(likePost(post._id));
+
+            if (localStorage.getItem(`${post._id}`)) {
+              alert("You have already Liked the post");
+            } else {
+              dispatch(likePost(post._id));
+            }
+            localStorage.setItem(`${post._id}`, true);
           }}
         >
           <ThumbUp style={{ marginRight: "10px" }} />
