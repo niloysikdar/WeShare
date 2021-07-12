@@ -2,9 +2,9 @@ import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
 
 import { getPosts, createPost, updatePost } from "../../actions/posts";
-
 import useStyles from "./styles";
 
 const Form = ({ currentId, setCurrentId }) => {
@@ -111,7 +111,10 @@ const Form = ({ currentId, setCurrentId }) => {
             type="file"
             multiple={false}
             onDone={
-              (image) => alert("Can't store image due to lack of DB Storage :(")
+              (image) =>
+                swal("Unable to store images due to limited DB storage", {
+                  icon: "warning",
+                })
               // setPostData({ ...postData, image: image.base64 })
             }
           />
