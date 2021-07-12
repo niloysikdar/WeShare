@@ -1,1 +1,3 @@
 # WeShare
+
+Going to write the README soon ...
