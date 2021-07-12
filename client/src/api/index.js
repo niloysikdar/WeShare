@@ -3,7 +3,7 @@ import axios from "axios";
 // For production
 import dotenv from "dotenv";
 dotenv.config();
-const baseUrl = process.env.REACT_APP_BASEURL;
+const baseUrl = process.env.REACT_APP_BASEURL || "http://localhost:5000/posts";
 
 // For Local Development
 // const baseUrl = "http://localhost:5000/posts";
