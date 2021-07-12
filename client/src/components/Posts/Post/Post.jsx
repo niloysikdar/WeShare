@@ -12,7 +12,7 @@ import Delete from "@material-ui/icons/Delete";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 
-import { deletePost } from "../../../actions/posts";
+import { deletePost, likePost } from "../../../actions/posts";
 import useStyles from "./styles";
 
 const Post = ({ post, setCurrentId }) => {
@@ -58,6 +58,7 @@ const Post = ({ post, setCurrentId }) => {
           color="primary"
           onClick={() => {
             console.log("Like pressed");
+            dispatch(likePost(post._id));
           }}
         >
           <ThumbUp style={{ marginRight: "10px" }} />
