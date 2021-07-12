@@ -14,7 +14,7 @@ const Form = ({ currentId, setCurrentId }) => {
     title: "",
     message: "",
     author: "",
-    tags: "",
+    tags: [],
     image: "",
   });
 
@@ -50,7 +50,7 @@ const Form = ({ currentId, setCurrentId }) => {
       title: "",
       message: "",
       author: "",
-      tags: "",
+      tags: [],
       image: "",
     });
     console.log("Form has been cleared");
@@ -99,7 +99,12 @@ const Form = ({ currentId, setCurrentId }) => {
           name="tags"
           label="Tags"
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) =>
+            setPostData({
+              ...postData,
+              tags: e.target.value.replace(" ", "").split(","),
+            })
+          }
         />
         <div className={classes.fileInput}>
           <FileBase
