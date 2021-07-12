@@ -1,11 +1,12 @@
 import * as api from "../api";
+import { actionTypes } from "../constants/actionTypes";
 
 // Action Creators
 export const getPosts = () => async (dispatch) => {
   try {
     const { data } = await api.getPosts();
     dispatch({
-      type: "FETCH_ALL",
+      type: actionTypes.FETCH_ALL,
       payload: data,
     });
   } catch (error) {
@@ -17,7 +18,7 @@ export const createPost = (post) => async (dispatch) => {
   try {
     const { data } = await api.createPost(post);
     dispatch({
-      type: "CREATE",
+      type: actionTypes.CREATE,
       payload: data,
     });
   } catch (error) {
@@ -29,7 +30,7 @@ export const updatePost = (id, updatedPost) => async (dispatch) => {
   try {
     const { data } = await api.updatePost(id, updatedPost);
     dispatch({
-      type: "UPDATE",
+      type: actionTypes.UPDATE,
       payload: data,
     });
   } catch (error) {
@@ -41,7 +42,7 @@ export const deletePost = (id) => async (dispatch) => {
   try {
     await api.deletePost(id);
     dispatch({
-      type: "DELETE",
+      type: actionTypes.DELETE,
       payload: id,
     });
   } catch (error) {
@@ -53,7 +54,7 @@ export const likePost = (id) => async (dispatch) => {
   try {
     const { data } = await api.likePost(id);
     dispatch({
-      type: "UPDATE",
+      type: actionTypes.UPDATE,
       payload: data,
     });
   } catch (error) {
