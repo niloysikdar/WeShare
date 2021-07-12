@@ -10,11 +10,14 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import Delete from "@material-ui/icons/Delete";
 import moment from "moment";
+import { useDispatch } from "react-redux";
 
+import { deletePost } from "../../../actions/posts";
 import useStyles from "./styles";
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -64,6 +67,7 @@ const Post = ({ post, setCurrentId }) => {
           color="secondary"
           onClick={() => {
             console.log("Delete Pressed");
+            dispatch(deletePost(post._id));
           }}
         >
           <Delete style={{ marginRight: "10px" }} />

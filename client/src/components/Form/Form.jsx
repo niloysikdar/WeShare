@@ -103,8 +103,9 @@ const Form = ({ currentId, setCurrentId }) => {
           <FileBase
             type="file"
             multiple={false}
-            onDone={(image) =>
-              setPostData({ ...postData, image: image.base64 })
+            onDone={
+              (image) => alert("Can't store image due to lack of DB Storage :(")
+              // setPostData({ ...postData, image: image.base64 })
             }
           />
         </div>
