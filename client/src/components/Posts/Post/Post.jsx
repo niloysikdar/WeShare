@@ -11,8 +11,10 @@ import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import Delete from "@material-ui/icons/Delete";
 import moment from "moment";
 import { useDispatch } from "react-redux";
+import swal from "sweetalert";
 
-import { deletePost, likePost } from "../../../actions/posts";
+import { likePost } from "../../../actions/posts";
+// import { deletePost } from "../../../actions/posts";
 import useStyles from "./styles";
 
 const Post = ({ post, setCurrentId }) => {
@@ -74,7 +76,8 @@ const Post = ({ post, setCurrentId }) => {
           color="secondary"
           onClick={() => {
             console.log("Delete Pressed");
-            dispatch(deletePost(post._id));
+            swal("Can't allow to delete !", { icon: "error" });
+            // dispatch(deletePost(post._id));
           }}
         >
           <Delete style={{ marginRight: "10px" }} />
