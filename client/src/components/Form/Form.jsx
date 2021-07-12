@@ -1,13 +1,13 @@
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { createPost } from "../../actions/posts";
+import { getPosts, createPost, updatePost } from "../../actions/posts";
 
 import useStyles from "./styles";
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [postData, setPostData] = useState({
@@ -18,14 +18,41 @@ const Form = () => {
     image: "",
   });
 
-  const handleSubmit = (e) => {
+  const selectedPost = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  );
+
+  useEffect(() => {
+    if (selectedPost) {
+      setPostData(selectedPost);
+    }
+  }, [selectedPost]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(createPost(postData));
+    if (currentId) {
+      dispatch(updatePost(currentId, postData)).then(() => {
+        clearForm();
+        dispatch(getPosts());
+      });
+    } else {
+      dispatch(createPost(postData)).then(() => {
+        clearForm();
+        dispatch(getPosts());
+      });
+    }
     console.log("Form has been submitted");
   };
 
-  const clearForm = (e) => {
-    e.preventDefault();
+  const clearForm = () => {
+    setCurrentId(null);
+    setPostData({
+      title: "",
+      message: "",
+      author: "",
+      tags: "",
+      image: "",
+    });
     console.log("Form has been cleared");
   };
 
@@ -37,7 +64,9 @@ const Form = () => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Share About Something</Typography>
+        <Typography variant="h6">
+          {currentId ? "Editing a Post" : "Share About Something"}
+        </Typography>
         <TextField
           variant="outlined"
           fullWidth
@@ -76,8 +105,9 @@ const Form = () => {
           <FileBase
             type="file"
             multiple={false}
-            onDone={(image) =>
-              setPostData({ ...postData, image: image.base64 })
+            onDone={
+              (image) => alert("Can't store image due to lack of DB Storage :(")
+              // setPostData({ ...postData, image: image.base64 })
             }
           />
         </div>
