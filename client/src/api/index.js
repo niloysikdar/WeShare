@@ -1,6 +1,12 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:5000/posts";
+// For production
+import dotenv from "dotenv";
+dotenv.config();
+const baseUrl = process.env.REACT_APP_BASEURL;
+
+// For Local Development
+// const baseUrl = "http://localhost:5000/posts";
 
 export const getPosts = () => axios.get(baseUrl);
 

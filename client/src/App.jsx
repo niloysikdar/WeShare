@@ -13,8 +13,6 @@ const App = () => {
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
 
-  console.log(currentId);
-
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch, currentId]);

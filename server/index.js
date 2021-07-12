@@ -14,6 +14,10 @@ app.use(express.urlencoded({ limit: "25mb", extended: true }));
 app.use(express.json({ limit: "25mb" }));
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send("WeShare API is running...");
+});
+
 // Adding "/posts" Routes
 const postRoutes = require("./routes/posts");
 app.use("/posts", postRoutes);
