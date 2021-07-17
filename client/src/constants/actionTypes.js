@@ -3,4 +3,6 @@ export const actionTypes = {
   CREATE: "CREATE",
   UPDATE: "UPDATE",
   DELETE: "DELETE",
+  AUTH: "AUTH",
+  LOGOUT: "LOGOUT",
 };

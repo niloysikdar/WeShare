@@ -59,8 +59,6 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           color="primary"
           onClick={() => {
-            console.log("Like pressed");
-
             if (localStorage.getItem(`${post._id}`)) {
               alert("You have already Liked the post");
             } else {
@@ -75,7 +73,6 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           color="secondary"
           onClick={() => {
-            console.log("Delete Pressed");
             swal("Can't allow to delete !", { icon: "error" });
             // dispatch(deletePost(post._id));
           }}

@@ -1,3 +1,5 @@
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { GoogleLogin } from "react-google-login";
 import { Button } from "@material-ui/core";
 import dotenv from "dotenv";
@@ -8,12 +10,18 @@ const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const GoogleLoginButton = ({ isSignup }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const googleSuccess = async (res) => {
     const tokenId = res?.tokenId;
     const result = res?.profileObj;
     try {
-      console.log({ result, tokenId });
+      dispatch({
+        type: "AUTH",
+        payload: { result, tokenId },
+      });
+      history.replace("/");
     } catch (error) {
       console.log(error);
     }

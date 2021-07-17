@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   Container,
   Grid,
@@ -14,6 +15,7 @@ import GoogleLoginButton from "./GoogleLoginButton";
 
 const Auth = () => {
   const classes = useStyles();
+  const history = useHistory();
   const [isShowPassword, setShowPassword] = useState(true);
   const [isSignup, setisSignup] = useState(false);
 
@@ -24,6 +26,13 @@ const Auth = () => {
   const handleIsShowPassword = () => {
     setShowPassword(!isShowPassword);
   };
+
+  useEffect(() => {
+    const userdata = localStorage.getItem("userdata");
+    if (userdata) {
+      history.replace("/");
+    }
+  }, [history]);
 
   return (
     <Container
