@@ -8,8 +8,6 @@ const Posts = ({ setCurrentId }) => {
   const classes = useStyles();
   const posts = useSelector((state) => state.posts);
 
-  console.log(posts, posts.length);
-
   return posts.length === 0 ? (
     <CircularProgress size={70} style={{ color: "white" }} />
   ) : (
@@ -20,7 +18,6 @@ const Posts = ({ setCurrentId }) => {
       spacing={3}
     >
       {posts.map((post) => {
-        console.log(post);
         return (
           <Grid key={post._id} item xs={12} sm={6}>
             <Post post={post} setCurrentId={setCurrentId} />
