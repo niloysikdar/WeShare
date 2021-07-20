@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const PostMessage = require("../models/postMessage");
+const PostMessage = require("../../models/postMessage");
 
 const deletePost = async (req, res) => {
   const { id: _id } = req.params;

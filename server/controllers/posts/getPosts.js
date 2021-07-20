@@ -1,4 +1,4 @@
-const PostMessage = require("../models/postMessage");
+const PostMessage = require("../../models/postMessage");
 
 const getPosts = async (req, res) => {
   try {

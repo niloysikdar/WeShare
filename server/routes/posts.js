@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const getPosts = require("../controllers/getPosts");
-const createPost = require("../controllers/createPost");
-const updatePost = require("../controllers/updatePost");
-const deletePost = require("../controllers/deletePost");
-const updateLikes = require("../controllers/updateLikes");
+const getPosts = require("../controllers/posts/getPosts");
+const createPost = require("../controllers/posts/createPost");
+const updatePost = require("../controllers/posts/updatePost");
+const deletePost = require("../controllers/posts/deletePost");
+const updateLikes = require("../controllers/posts/updateLikes");
 
 // Setting Routes for /posts
 router.get("/", getPosts);

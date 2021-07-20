@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const PostMessage = require("../models/postMessage");
+const PostMessage = require("../../models/postMessage");
 
-const updatePost = async (req, res) => {
+const updateLikes = async (req, res) => {
   const { id: _id } = req.params;
-  const post = req.body;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
@@ -12,12 +11,13 @@ const updatePost = async (req, res) => {
       });
     } else {
       try {
+        const post = await PostMessage.findById(_id);
         const updatedPost = await PostMessage.findByIdAndUpdate(
           _id,
-          { ...post, _id },
+          { likeCount: post.likeCount + 1 },
           { new: true }
         );
-        res.status(201).json(post);
+        res.status(201).json(updatedPost);
       } catch (error) {
         res.status(409).json({
           message: error.message,
@@ -31,4 +31,4 @@ const updatePost = async (req, res) => {
   }
 };
 
-module.exports = updatePost;
+module.exports = updateLikes;
