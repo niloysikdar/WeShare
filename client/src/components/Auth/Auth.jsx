@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   Container,
   Grid,
@@ -12,20 +13,21 @@ import LockOutlined from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
 import InputField from "./InputField";
 import GoogleLoginButton from "./GoogleLoginButton";
+import { login, signUp } from "../../actions/auth";
 
 const Auth = () => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [isShowPassword, setShowPassword] = useState(true);
   const [isSignup, setisSignup] = useState(false);
-
-  const handleChange = () => {};
-
-  const handleSubmit = () => {};
-
-  const handleIsShowPassword = () => {
-    setShowPassword(!isShowPassword);
-  };
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   useEffect(() => {
     const userdata = localStorage.getItem("userdata");
@@ -33,6 +35,23 @@ const Auth = () => {
       history.replace("/");
     }
   }, [history]);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignup) {
+      dispatch(signUp(formData, history));
+    } else {
+      dispatch(login(formData, history));
+    }
+  };
+
+  const handleIsShowPassword = () => {
+    setShowPassword(!isShowPassword);
+  };
 
   return (
     <Container
@@ -84,7 +103,7 @@ const Auth = () => {
             />
             {isSignup && (
               <InputField
-                name="password"
+                name="confirmPassword"
                 label="Confirm Password"
                 type={isShowPassword ? "password" : "text"}
                 handleShowPassword={handleIsShowPassword}
