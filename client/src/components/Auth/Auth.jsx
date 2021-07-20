@@ -43,7 +43,11 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isSignup) {
-      dispatch(signUp(formData, history));
+      if (formData.password === formData.confirmPassword) {
+        dispatch(signUp(formData, history));
+      } else {
+        alert("Passwords should match");
+      }
     } else {
       dispatch(login(formData, history));
     }

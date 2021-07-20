@@ -3,18 +3,20 @@ import { actionTypes } from "../constants/actionTypes";
 
 export const login = (formData, history) => async (dispatch) => {
   try {
-    // Login
-    console.log(`Login with ${JSON.stringify(formData)}`);
-    // history.replace("/");
+    // Login the user
+    const { data } = await api.login(formData);
+    dispatch({ type: actionTypes.AUTH, payload: data });
+    history.replace("/");
   } catch (error) {
     console.log(error);
   }
 };
 export const signUp = (formData, history) => async (dispatch) => {
   try {
-    // SignUp
-    console.log(`SignUp with ${JSON.stringify(formData)}`);
-    // history.replace("/");
+    // SignUp the User
+    const { data } = await api.signup(formData);
+    dispatch({ type: actionTypes.AUTH, payload: data });
+    history.replace("/");
   } catch (error) {
     console.log(error);
   }
