@@ -7,11 +7,13 @@ const updatePost = require("../controllers/posts/updatePost");
 const deletePost = require("../controllers/posts/deletePost");
 const updateLikes = require("../controllers/posts/updateLikes");
 
+const auth = require("../middleware/auth");
+
 // Setting Routes for /posts
 router.get("/", getPosts);
-router.post("/create", createPost);
-router.patch("/:id", updatePost);
-router.delete("/:id", deletePost);
-router.patch("/likepost/:id", updateLikes);
+router.post("/create", auth, createPost);
+router.patch("/:id", auth, updatePost);
+router.delete("/:id", auth, deletePost);
+router.patch("/likepost/:id", auth, updateLikes);
 
 module.exports = router;
