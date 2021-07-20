@@ -59,16 +59,11 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           color="primary"
           onClick={() => {
-            if (localStorage.getItem(`${post._id}`)) {
-              alert("You have already Liked the post");
-            } else {
-              dispatch(likePost(post._id));
-            }
-            localStorage.setItem(`${post._id}`, true);
+            dispatch(likePost(post._id));
           }}
         >
           <ThumbUp style={{ marginRight: "10px" }} />
-          {post.likeCount}
+          {post.likes.length}
         </Button>
         <Button
           color="secondary"

@@ -22,9 +22,9 @@ app.get("/", (req, res) => {
 const postRoutes = require("./routes/posts");
 app.use("/posts", postRoutes);
 
-// Adding "/user" Routes
+// Adding "/users" Routes
 const userRoutes = require("./routes/users");
-app.use("/user", userRoutes);
+app.use("/users", userRoutes);
 
 // Connecting to MongoDB
 mongoose
