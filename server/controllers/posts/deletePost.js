@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const PostMessage = require("../models/postMessage");
+const PostMessage = require("../../models/postMessage");
 
-const updatePost = async (req, res) => {
+const deletePost = async (req, res) => {
   const { id: _id } = req.params;
-  const post = req.body;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
@@ -12,12 +11,10 @@ const updatePost = async (req, res) => {
       });
     } else {
       try {
-        const updatedPost = await PostMessage.findByIdAndUpdate(
-          _id,
-          { ...post, _id },
-          { new: true }
-        );
-        res.status(201).json(post);
+        await PostMessage.findByIdAndRemove(_id);
+        res.status(201).json({
+          message: "Post Deleted Successfully",
+        });
       } catch (error) {
         res.status(409).json({
           message: error.message,
@@ -31,4 +28,4 @@ const updatePost = async (req, res) => {
   }
 };
 
-module.exports = updatePost;
+module.exports = deletePost;

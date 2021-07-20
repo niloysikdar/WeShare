@@ -6,14 +6,8 @@ const postSchema = mongoose.Schema({
   author: String,
   tags: [String],
   image: String,
-  likeCount: {
-    type: Number,
-    default: 0,
-  },
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
+  likes: { type: [String], default: [] },
+  createdAt: { type: Date, default: new Date() },
 });
 
 const PostMessage = mongoose.model("PostMessage", postSchema);
