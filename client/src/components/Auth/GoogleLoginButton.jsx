@@ -14,12 +14,12 @@ const GoogleLoginButton = ({ isSignup }) => {
   const history = useHistory();
 
   const googleSuccess = async (res) => {
-    const tokenId = res?.tokenId;
+    const token = res?.tokenId;
     const result = res?.profileObj;
     try {
       dispatch({
         type: "AUTH",
-        payload: { result, tokenId },
+        payload: { result, token },
       });
       history.replace("/");
     } catch (error) {
