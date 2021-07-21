@@ -63,7 +63,7 @@ const Post = ({ post, setCurrentId }) => {
           }}
         >
           <ThumbUp style={{ marginRight: "10px" }} />
-          {post.likes.length}
+          {post.likes !== undefined ? post.likes.length : 0}
         </Button>
         <Button
           color="secondary"
