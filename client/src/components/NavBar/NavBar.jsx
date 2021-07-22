@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import decode from "jwt-decode";
 
 import { actionTypes } from "../../constants/actionTypes";
 import useStyles from "./styles";
@@ -15,10 +16,6 @@ const NavBar = () => {
     JSON.parse(localStorage.getItem("userdata"))
   );
 
-  useEffect(() => {
-    setUserdata(JSON.parse(localStorage.getItem("userdata")));
-  }, [location]);
-
   const logout = () => {
     dispatch({
       type: actionTypes.LOGOUT,
@@ -26,6 +23,17 @@ const NavBar = () => {
     history.replace("/auth");
     setUserdata(null);
   };
+
+  useEffect(() => {
+    setUserdata(JSON.parse(localStorage.getItem("userdata")));
+    if (userdata) {
+      const decodedToken = decode(userdata.token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        logout();
+      }
+    }
+    // eslint-disable-next-line
+  }, [location]);
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">

@@ -1,7 +1,14 @@
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Avatar,
+} from "@material-ui/core";
 import { useState, useEffect } from "react";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
+import LockOutlined from "@material-ui/icons/LockOutlined";
 import swal from "sweetalert";
 
 import { getPosts, createPost, updatePost } from "../../actions/posts";
@@ -59,10 +66,20 @@ const Form = ({ currentId, setCurrentId }) => {
 
   if (!userdata) {
     return (
-      <Paper className={classes.paper}>
+      <Paper
+        className={classes.paper}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Typography variant="h6" align="center">
           Login to create and like posts
         </Typography>
+        <Avatar className={classes.avatar}>
+          <LockOutlined />
+        </Avatar>
       </Paper>
     );
   }

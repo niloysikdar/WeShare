@@ -21,4 +21,8 @@ export default makeStyles((theme) => ({
   buttonSubmit: {
     margin: "10px 10px 0 10px",
   },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+  },
 }));
