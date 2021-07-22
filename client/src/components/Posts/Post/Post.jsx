@@ -11,15 +11,42 @@ import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import Delete from "@material-ui/icons/Delete";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import swal from "sweetalert";
 
 import { likePost } from "../../../actions/posts";
-// import { deletePost } from "../../../actions/posts";
+import { deletePost } from "../../../actions/posts";
 import useStyles from "./styles";
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const userdata = JSON.parse(localStorage.getItem("userdata"));
+
+  const Likes = () => {
+    let isCurrentUserLiked = false;
+    if (
+      post.likes !== undefined &&
+      post.likes.find(
+        (likeId) =>
+          likeId === userdata?.result._id ||
+          likeId === userdata?.result.googleId
+      )
+    ) {
+      isCurrentUserLiked = true;
+    }
+    return (
+      <Button
+        color={isCurrentUserLiked ? "primary" : "default"}
+        disabled={!userdata}
+        onClick={() => {
+          dispatch(likePost(post._id));
+        }}
+      >
+        <ThumbUp style={{ marginRight: "10px" }} />
+        {post.likes !== undefined ? post.likes.length : 0}
+      </Button>
+    );
+  };
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -32,16 +59,20 @@ const Post = ({ post, setCurrentId }) => {
           {moment(post.createdAt).fromNow()}
         </Typography>
       </div>
-      <div className={classes.overlay2}>
-        <Button
-          style={{ color: "white" }}
-          onClick={() => {
-            setCurrentId(post._id);
-          }}
-        >
-          <MoreHoriz />
-        </Button>
-      </div>
+      {(post.authorId === userdata?.result._id ||
+        post.authorId === userdata?.result.googleId) && (
+        <div className={classes.overlay2}>
+          <Button
+            style={{ color: "white" }}
+            onClick={() => {
+              setCurrentId(post._id);
+            }}
+          >
+            <MoreHoriz />
+          </Button>
+        </div>
+      )}
+
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary">
           {post.tags.map((tag) => `#${tag} `)}
@@ -55,26 +86,22 @@ const Post = ({ post, setCurrentId }) => {
           {post.message}
         </Typography>
       </CardContent>
-      <CardActions style={{ justifyContent: "space-around" }}>
-        <Button
-          color="primary"
-          onClick={() => {
-            dispatch(likePost(post._id));
-          }}
-        >
-          <ThumbUp style={{ marginRight: "10px" }} />
-          {post.likes.length}
-        </Button>
-        <Button
-          color="secondary"
-          onClick={() => {
-            swal("Can't allow to delete !", { icon: "error" });
-            // dispatch(deletePost(post._id));
-          }}
-        >
-          <Delete style={{ marginRight: "10px" }} />
-          Delete
-        </Button>
+      <CardActions
+        style={{ justifyContent: "space-between", margin: "0 10px" }}
+      >
+        <Likes />
+        {(post.authorId === userdata?.result._id ||
+          post.authorId === userdata?.result.googleId) && (
+          <Button
+            color="secondary"
+            onClick={() => {
+              dispatch(deletePost(post._id));
+            }}
+          >
+            <Delete style={{ marginRight: "10px" }} />
+            Delete
+          </Button>
+        )}
       </CardActions>
     </Card>
   );

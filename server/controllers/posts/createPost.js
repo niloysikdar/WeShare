@@ -2,7 +2,11 @@ const PostMessage = require("../../models/postMessage");
 
 const createPost = async (req, res) => {
   const body = req.body;
-  const post = { ...body, createdAt: new Date() };
+  const post = {
+    ...body,
+    authorId: req.userId,
+    createdAt: new Date().toISOString(),
+  };
   const newPost = new PostMessage(post);
   try {
     await newPost.save();

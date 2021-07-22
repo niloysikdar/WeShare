@@ -1,19 +1,26 @@
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Avatar,
+} from "@material-ui/core";
 import { useState, useEffect } from "react";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
+import LockOutlined from "@material-ui/icons/LockOutlined";
 import swal from "sweetalert";
 
 import { getPosts, createPost, updatePost } from "../../actions/posts";
 import useStyles from "./styles";
 
 const Form = ({ currentId, setCurrentId }) => {
+  const userdata = JSON.parse(localStorage.getItem("userdata"));
   const classes = useStyles();
   const dispatch = useDispatch();
   const [postData, setPostData] = useState({
     title: "",
     message: "",
-    author: "",
     tags: [],
     image: "",
   });
@@ -31,17 +38,20 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentId) {
-      dispatch(updatePost(currentId, postData)).then(() => {
+      dispatch(
+        updatePost(currentId, { ...postData, author: userdata?.result.name })
+      ).then(() => {
         clearForm();
         dispatch(getPosts());
       });
     } else {
-      dispatch(createPost(postData)).then(() => {
-        clearForm();
-        dispatch(getPosts());
-      });
+      dispatch(createPost({ ...postData, author: userdata?.result.name })).then(
+        () => {
+          clearForm();
+          dispatch(getPosts());
+        }
+      );
     }
-    console.log("Form has been submitted");
   };
 
   const clearForm = () => {
@@ -49,12 +59,30 @@ const Form = ({ currentId, setCurrentId }) => {
     setPostData({
       title: "",
       message: "",
-      author: "",
       tags: [],
       image: "",
     });
-    console.log("Form has been cleared");
   };
+
+  if (!userdata) {
+    return (
+      <Paper
+        className={classes.paper}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h6" align="center">
+          Login to create and like posts
+        </Typography>
+        <Avatar className={classes.avatar}>
+          <LockOutlined />
+        </Avatar>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper} variant="elevation">
@@ -88,16 +116,8 @@ const Form = ({ currentId, setCurrentId }) => {
         <TextField
           variant="outlined"
           fullWidth
-          name="author"
-          label="Author"
-          value={postData.author}
-          onChange={(e) => setPostData({ ...postData, author: e.target.value })}
-        />
-        <TextField
-          variant="outlined"
-          fullWidth
           name="tags"
-          label="Tags"
+          label='Tags(Add "," between them)'
           value={postData.tags}
           onChange={(e) =>
             setPostData({
